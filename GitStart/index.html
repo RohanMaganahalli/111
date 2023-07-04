@@ -48,10 +48,16 @@ var addItem=document.getElementsByClassName("title");
 console.log(addItem[0]);
 addItem[0].style.color="green";
 addItem[0].style.fontWeight="bold";
-var li=document.getElementsByTagName('li');
-console.log(li);
-console.log(li[1]);
-li[1].textContent="Hello 2";
-li[1].style.fontWeight='bold';
-li[1].style.backgroundColor='yellow';
+</script>
+<script>
+  var titles=document.querySelectorAll('.title');
+  console.log(titles);
+  titles[0].textContent='Hello';
+  var odd=document.querySelectorAll('li:nth-child(odd)');
+  var even=document.querySelectorAll('li:nth-child(even)');
+  for(var i=0;i<odd.lenght;i++)
+  {
+    odd[i].style.backgroundColor='#f4f4f4';
+    
+  }
 </script>
