@@ -25,9 +25,11 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="text" class="form-control" id="exampleInputPassword1">
               </div>
-               
+
               <div class="text-center">
                 <button type="submit" class="btn btn-primary mb-2" id="submit">Submit</button>
+                <br>
+                <button type="submit" class="btn btn-primary mb-2" id="del" onclick="delfun()">Delete</button>
               </div>
               </form>
               <ul class="list-group" id="users">
@@ -44,8 +46,10 @@
             // const name = document.getElementById('exampleInputEmail1');
             // const pass = document.getElementById('exampleInputPassword1');
             // const msg = document.querySelector('.msg');
+            const msg = document.querySelector('.msg');
             // const ul = document.querySelector('#users');
             // sub.addEventListener('submit', onSubmit);
+
             // function onSubmit(e) {
                 // e.preventDefault();
                 // if(name.value===''){
@@ -76,41 +80,32 @@
             const form = document.getElementById('my-form');
             form.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const existingUserDetailsJSON = localStorage.getItem('userDetails');
             const existingUserDetails = existingUserDetailsJSON ? JSON.parse(existingUserDetailsJSON) : {};
-
             // Retrieve the values from the input fields
             const name = document.getElementById('exampleInputEmail1').value;
             const pass = document.getElementById('exampleInputPassword1').value;
-
-            // Create an object to store the user details
-            const userDetails = {
             // Create a new user object
             const newUser = {
                 name: name,
                 pass: pass
             };
-
-            // Convert the user details object to a JSON string
-            const userDetailsJSON = JSON.stringify(userDetails);
             // Add the new user to the existing user details
             existingUserDetails[newUser.name] = newUser;
-
             // Convert the updated user details object to a JSON string
             const updatedUserDetailsJSON = JSON.stringify(existingUserDetails);
-
-            // Store the user details in the local storage
-            localStorage.setItem('userDetails', userDetailsJSON);
             // Store the updated user details in the local storage
             localStorage.setItem('userDetails', updatedUserDetailsJSON);
-
-            // Optional: Reset the form fields after submission
             // Reset the form fields after submission
             document.getElementById('exampleInputEmail1').value = '';
             document.getElementById('exampleInputPassword1').value = '';
             });
 
+
+            function delfun(){
+                localStorage.removeItem("userDetails");
+                msg.innerHTML = "Deleted";
+            }
         </script>
 
     <script
