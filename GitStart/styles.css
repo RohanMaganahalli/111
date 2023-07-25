@@ -1,0 +1,25 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    }
+    
+    h1 {
+    text-align: center;
+    }
+    
+    .menu {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 300px;
+    }
+    
+    ul {
+    list-style: none;
+    padding: 0;
+    }
+    
+    form {
+    margin-top: 10px;
+    }
