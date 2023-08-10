@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chat App</title>
+</head>
+<body>
+<div id="chatMessages">
+<!-- Messages will be displayed here -->
+</div>
+<form id="chatForm" onsubmit="sendMessage(event)">
+<input type="text" id="messageInput" placeholder="Type a message...">
+<button type="submit">Send</button>
+</form>
+<script>
+// JavaScript code to handle AJAX requests and dynamic updates
+function sendMessage(event) {
+event.preventDefault();
+const messageInput = document.getElementById("messageInput");
+const message = messageInput.value;
+
+fetch("/send", {
+method: "POST",
+headers: {
+"Content-Type": "application/x-www-form-urlencoded",
+},
+body: "message=" + encodeURIComponent(message),
+}).then((response) => {
+messageInput.value = ""; // Clear input
+if (response.ok) {
+// If the message was sent successfully, update the chat
+fetch("/messages")
+.then((response) => response.text())
+.then((data) => {
+document.getElementById("chatMessages").innerHTML = data;
+});
+}
+});
+}
+
+// Load initial messages
+fetch("/messages")
+.then((response) => response.text())
+.then((data) => {
+document.getElementById("chatMessages").innerHTML = data;
+});
+</script>
+</body>
+</html>
