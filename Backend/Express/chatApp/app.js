@@ -1,12 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Path helper function for cross-OS compatibility
+function getPath(relativePath) {
+return path.join(__dirname, relativePath);
+}
 
 // Array to store messages (format: { username, message })
 const messages = [];
@@ -15,18 +21,7 @@ const messages = [];
 app.get('/', (req, res) => {
 const username = req.cookies.username || '';
 const messageList = messages.map(entry => `${entry.username}: ${entry.message}`).join('<br>');
-res.send(`
-<h1>Chat App</h1>
-<form action="/" method="POST">
-<label for="username">Username:</label>
-<input type="text" id="username" name="username" value="${username}">
-<label for="message">Message:</label>
-<input type="text" id="message" name="message">
-<button type="submit">Send</button>
-</form>
-<h2>Messages</h2>
-<div>${messageList}</div>
-`);
+res.sendFile(getPath('index.html'));
 });
 
 // Handle form submission
@@ -43,7 +38,33 @@ messages.push({ username, message });
 res.redirect('/');
 });
 
-const port = 3502;
+// "Contact Us" form
+app.get('/contactus', (req, res) => {
+res.sendFile(getPath('contactus.html'));
+});
+
+// Handle "Contact Us" form submission and show success message
+app.post('/contactus', (req, res) => {
+const name = req.body.name;
+const email = req.body.email;
+const phone = req.body.phone;
+const timeToCall = req.body.timeToCall;
+
+// Redirect to the success page with a success message
+res.redirect('/success');
+});
+
+// Success message
+app.get('/success', (req, res) => {
+res.send('<h1>Form Successfully Filled</h1>');
+});
+
+// Handle "Page Not Found" with a 404 status
+app.use((req, res) => {
+res.status(404).send('Page Not Found');
+});
+
+const port = 3504;
 app.listen(port, () => {
 console.log(`Server is running on port ${port}`);
 });

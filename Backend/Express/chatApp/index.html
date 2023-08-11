@@ -1,24 +1,39 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
-<title>Enter Username</title>
+<title>Chat App</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Enter Your Username</h1>
-<form id="usernameForm" action="/set-username" method="POST">
+<div id="navbar">
+<h1>Chat App</h1>
+<a href="/">Home</a>
+<a href="/contactus">Contact Us</a>
+</div>
+<h1>Enter Your Username and Send a Message</h1>
+<form action="/" method="POST">
 <label for="username">Username:</label>
-<input type="text" id="username" name="username">
-<button type="submit">Submit</button>
+<input type="text" id="username" name="username" value="">
+<label for="message">Message:</label>
+<input type="text" id="message" name="message">
+<button type="submit">Send</button>
 </form>
+<h2>Messages</h2>
+<div id="messageList">
+<!-- Display messages dynamically using JavaScript -->
+</div>
 <script>
-// Store username in local storage
-document.getElementById("usernameForm").addEventListener("submit", function(event) {
-event.preventDefault();
-const username = document.getElementById("username").value;
-localStorage.setItem("username", username);
-window.location.href = "/send-message";
+// JavaScript to fetch and display messages
+function getMessages() {
+fetch('/messages')
+.then(response => response.json())
+.then(data => {
+const messageList = document.getElementById('messageList');
+messageList.innerHTML = data.map(entry => `${entry.username}: ${entry.message}`).join('<br>');
 });
+}
+// Fetch and display messages on page load
+getMessages();
 </script>
 </body>
 </html>

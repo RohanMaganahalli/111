@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact Us</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="navbar">
+<h1>Chat App</h1>
+<a href="/">Home</a>
+<a href="/contactus">Contact Us</a>
+</div>
+<h1>Contact Us</h1>
+<form action="/contactus" method="POST">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+<label for="phone">Phone:</label>
+<input type="tel" id="phone" name="phone" required>
+<label for="timeToCall">Preferred Time to Call:</label>
+<input type="text" id="timeToCall" name="timeToCall" required>
+<button type="submit">Submit</button>
+</form>
+</body>
+</html>
