@@ -1,0 +1,24 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Enter Username</title>
+</head>
+<body>
+<h1>Enter Your Username</h1>
+<form id="usernameForm" action="/set-username" method="POST">
+<label for="username">Username:</label>
+<input type="text" id="username" name="username">
+<button type="submit">Submit</button>
+</form>
+<script>
+// Store username in local storage
+document.getElementById("usernameForm").addEventListener("submit", function(event) {
+event.preventDefault();
+const username = document.getElementById("username").value;
+localStorage.setItem("username", username);
+window.location.href = "/send-message";
+});
+</script>
+</body>
+</html>
