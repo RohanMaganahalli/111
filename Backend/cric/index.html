@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cricket Player Information</title>
+</head>
+<body>
+    <h1>Cricket Player Information</h1>
+
+    <!-- Form to input player data -->
+    <form action="/submit" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" required><br><br>
+        <label for="age">Age:</label>
+        <input type="number" name="age" required><br><br>
+        <label for="photo_url">Photo URL:</label>
+        <input type="text" name="photo_url"><br><br>
+        <label for="birthplace">Birthplace:</label>
+        <input type="text" name="birthplace"><br><br>
+        <label for="description">Description:</label>
+        <textarea name="description"></textarea><br><br>
+        <label for="matches">Matches:</label>
+        <input type="number" name="matches"><br><br>
+        <label for="runs">Runs:</label>
+        <input type="number" name="runs"><br><br>
+        <label for="wickets">Wickets:</label>
+        <input type="number" name="wickets"><br><br>
+        <button type="submit">Submit Player Data</button>
+    </form>
+
+    <hr>
+
+    <!-- Form to search for a player -->
+    <h2>Search for a Player</h2>
+    <form action="/search" method="GET">
+        <label for="searchName">Player Name:</label>
+        <input type="text" name="name" id="searchName" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <!-- Display player information here -->
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
