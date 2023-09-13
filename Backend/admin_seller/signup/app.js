@@ -26,6 +26,23 @@ app.get('/signup.html',(req,res)=>{
     res.sendFile(path.join(__dirname,'public','signup.html'));
 });
 
+app.post('/login',(req,res)=>{
+    const{email,password}=req.body;
+    const sql='SELECT * FROM users WHERE email=?AND password=?';
+    db.query(sql,[email,password],(err,result)=>{
+        if(err){
+            console.error(err);
+            res.status(500).send('Error logging in user');
+        }else if(result.length>0){
+            console.log('User logged in successfully');
+            res.status(200).send('Login successful');
+        }else{
+            console.log('Invalid email or password');
+            res.status(401).send('Invalid email or password');
+        }
+    });
+});
+
 app.post('/signup',(req,res)=>{
     const{name,email,password}=req.body;
     const sql='INSERT INTO users(name,email,password) VALUES (?,?,?)';
