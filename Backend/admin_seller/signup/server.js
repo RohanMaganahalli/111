@@ -47,15 +47,21 @@ app.get('login.html',(req,res)=>{
 app.post('/register', (req, res) => {
 const { name, email, password } = req.body;
 
+bcrypt.hash(password,10,(err,hash)=>{
+    if(err){
+        console.error('Password hashing failed:'+err.message);
+        return res.status(500).send('Internal Server Error');
+    }
 
 // Insert the user data into the database
-db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password], (err) => {
+db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hash], (err) => {
 if (err) {
 console.error('User registration failed: ' + err.message);
 return res.status(500).send('Internal Server Error');
 }
 
 res.status(200).send('User registered successfully');
+});
 });
 });
 
@@ -76,11 +82,17 @@ return res.status(401).send('User not found');
 
 const user = results[0];
 
-if(password===user.password){
-    res.status(200).send('User logged in successfully');
-}else{
-    res.status(401).send('Incorrect password');
-}
+bcrypt.compare(password,user.password,(bcryptErr,bcryptResult)=>{
+    if(bcryptErr){
+        console.error('Password comparison failed:'+bcryptErr.message);
+        return res.status(500).send('Internal Server Error');
+    }
+    if(bcryptResult){
+        res.status(200).send('User logged in successfully');
+    }else{
+        res.status(401).send('Incorrect password');
+    }
+});
 });
 });
 app.listen(port, () => {
