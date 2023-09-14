@@ -60,7 +60,7 @@ console.error('User registration failed: ' + err.message);
 return res.status(500).send('Internal Server Error');
 }
 
-res.status(200).send('User registered successfully');
+res.status(200).send('User registration successful');
 });
 });
 });
