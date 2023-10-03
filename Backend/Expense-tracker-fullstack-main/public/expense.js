@@ -1,7 +1,10 @@
 const url = "http://localhost:3000";
+const token=localStorage.getItem('token');
+console.log('Token:',token)
+;
 const config = {
 headers: {
-Authorization: `${localStorage.getItem("token")}`, //the token is a variable which holds the token
+Authorization: token, //the token is a variable which holds the token
 },
 };
 

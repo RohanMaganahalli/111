@@ -50,9 +50,7 @@ const postExpenseController = async (req, res) => {
 };
 
 const getExpenseController = (req, res) => {
-    console.log(`Customer details are: `);
-    console.clear();
-    console.log(req.token);
+    console.log(req.data);
     jwt.verify(req.token, secretKey, async (err, data) => {
         if (err) {
             console.log(err);
@@ -75,7 +73,7 @@ const getExpenseController = (req, res) => {
                 offset = offsetAsNumber;
             const result = await Expense.findAndCountAll({
                 where: {
-                    UserId: data.user.userId
+                    userId: data.userId
                 },
                 limit: offset,
                 offset: offset * (page - 1),
