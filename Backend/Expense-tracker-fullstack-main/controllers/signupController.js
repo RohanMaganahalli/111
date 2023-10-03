@@ -3,11 +3,21 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/userModel");
 
 const secretKey = "secretKey";
-const postSignUpController = (req, res) => {
+const postSignUpController = async (req, res) => {
   console.log(`req.body.name=${req.body.name}`);
   console.log(`req.body.email=${req.body.email}`);
   console.log(`req.body.password=${req.body.password}`);
   console.log(req.body);
+  const user = await User.findOne({
+    where: {
+      email: req.body.email,
+    },
+  })
+  console.log(user);
+  if(user){
+   return res.status(409).json({message:'User already exists',success:false});
+  }
+  else{
   bcrypt
     .hash(req.body.password, 10)
     .then(function (hash) {
@@ -27,6 +37,7 @@ const postSignUpController = (req, res) => {
             } else {
               console.log("successful encry");
               res.json({
+                success: true,
                 message: "User login Succesfully",
                 token,
                 name: result.dataValues.name,
@@ -45,5 +56,6 @@ const postSignUpController = (req, res) => {
       console.log(err);
       return res.end();
     });
+  }
 };
-module.exports=postSignUpController
+module.exports = postSignUpController

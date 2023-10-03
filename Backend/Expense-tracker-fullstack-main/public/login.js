@@ -1,42 +1,9 @@
-const url = 'http://localhost:3002';
+const url = 'http://localhost:3000';
 
-const save = async (e) => {
-    e.preventDefault();
-    console.log(e);
-    console.log('hello');
-    const name = document.getElementById('name');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const obj = {
-        name: name.value,
-        email: email.value,
-        password: password.value
-    };
-    console.log(obj);
 
-    try {
-        const response = await axios.post(`${url}/signup`, obj);
-        console.log(response);
-        if (response.data.name === 'SequelizeUniqueConstraintError') {
-            console.log('duplicate');
-            const showResult = document.getElementById('showResult');
-            showResult.innerHTML = 'User Already exists';
-        } else {
-            alert(response.data.message);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("userName", response.data.name);
-            localStorage.setItem("isPremium", response.data.is_premium);
-            window.location = `${url}/expense.html`;
-        }
-        name.value = '';
-        email.value = '';
-        password.value = '';
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-const login = async (e) => {
+const formdiv=document.getElementById('formdiv');
+console.log(formdiv);
+formdiv.addEventListener('onsubmit',async (e)=>{
     console.log(e);
     console.log('login');
     const email = document.getElementById('email');
@@ -64,7 +31,8 @@ const login = async (e) => {
         const showResult = document.getElementById('showResult');
         showResult.innerHTML = err.response.data.name;
     }
-};
+})
+ 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     if (token === undefined || token === '' || token === null) {
@@ -74,11 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-const forget_Password =document.getElementById ('forget_password');
-if(forget_Password){
-    forget_Password.addEventListener('click',()=>{
-        window.location = `${url}/forget.html`;
-    });
-}
+    const forget_Password = document.getElementById('forget_password');
+    if (forget_Password) {
+        forget_Password.addEventListener('click', () => {
+            window.location = `${url}/forget.html`;
+        });
+    }
 });
 

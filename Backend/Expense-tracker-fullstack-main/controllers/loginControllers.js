@@ -9,34 +9,32 @@ exports.postLoginController = (req, res) => {
   console.log(`req.body.email=${req.body.email}`);
   console.log(`req.body.password=${req.body.password}`);
   console.log(`req.body.User=${req.body}`);
-  User.findAll({
+  User.findOne({
     where: {
       email: req.body.email,
     },
   })
-    .then((result) => {
-      if (result.length === 0) {
+    .then((user) => {
+      if (!user) {
         res.status(404);
         res.json({ name: "user does not exists" });
       } else {
+        console.log(user);
         bcrypt
-          .compare(req.body.password, result[0].dataValues.password)
+          .compare(req.body.password, user.password)
           .then(function (resu) {
             if (resu === true) {
-              console.log(result[0].dataValues);
               // generating token when user is login with post request
-              const user = {
-                userId: result[0].dataValues.id,
-                is_premium: result[0].dataValues.is_premium,
-              };
-              jwt.sign({ user }, secretKey, (err, token) => {
+              
+              jwt.sign({ userId: user.id,
+                is_premium: user.is_premium }, secretKey, (err, token) => {
                 if (err) {
                   console.log(err);
                 } else {
                   res.json({
-                    name: result[0].dataValues.name,
+                    name: user.name,
                     token,
-                    is_premium: result[0].dataValues.is_premium,
+                    is_premium: user.is_premium,
                   });
                 }
               });
@@ -47,8 +45,6 @@ exports.postLoginController = (req, res) => {
             }
           });
       }
-      console.log(`result`);
-      console.log(result);
     })
     .catch((err) => {
       console.log(err);

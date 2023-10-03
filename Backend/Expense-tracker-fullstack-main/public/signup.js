@@ -1,3 +1,4 @@
+
 // Function to handle form submission
 const save = async (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -16,21 +17,22 @@ const save = async (e) => {
     
     try {
     // Send a POST request to your server (adjust the URL accordingly)
-    const response = await axios.post('/signup', formData);
-    
+    const response = await axios.post('http://localhost:3000/signup', formData);
+    console.log(response);
     // Handle the response from the server
     if (response.data.success) {
     // If the signup was successful, you can redirect or show a success message
     alert('Signup successful!'); // Modify this as needed
-    window.location.href = '/login.html'; // Redirect to login page
+   window.location.href = '/login.html';
     } else {
     // Handle any errors or display error messages
-    alert('Signup failed. Please try again.'); // Modify this as needed
+    alert(response.data.message); 
     }
     } catch (error) {
     // Handle network errors or server errors
     console.error('Error:', error);
-    alert('An error occurred. Please try again later.'); // Modify this as needed
+    const err=error.response.data.message;
+    alert(err); 
     }
     };
     

@@ -2,6 +2,6 @@ const express=require('express');
 const postSignUpController=require('../controllers/signupController');
 const router=express.Router();
 
-router.post('/signup',postSignUpController)
+router.post('/',postSignUpController)
 
 module.exports=router;

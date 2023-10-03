@@ -87,10 +87,10 @@ Expense.belongsTo(User); // in expense table, user ka primary key will be added 
 User.hasMany(Order);
 Order.belongsTo(User);
 
-sequelize.sync({ force: false }) // creates table according to the schema declared in model
+sequelize.sync() // creates table according to the schema declared in model
     .then(result => console.log(`connected to data base`))
     .catch(err => console.log(err));
 
 app.listen(port,()=>{
-     console.log(`listening on port 3002`);
+     console.log(`listening on port 3000`);
 });
