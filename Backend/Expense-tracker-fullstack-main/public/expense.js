@@ -26,7 +26,7 @@ token: localStorage.getItem(`token`),
 console.log(obj);
 
 axios
-.post(`${url}/expense`, obj)
+.post(`${url}/expense`, obj,config)
 .then((data) => {
 console.log(data);
 const result = data.data.data;
@@ -203,7 +203,7 @@ axios
 const handleOpenRazorpay = (data) => {
 console.log(data);
 let options = {
-key_id: "rzp_test_SakFS05puLVhuN",
+key_id: "rzp_test_pFKugtjpC7I71n",
 order_id: data.id,
 //this handler is a callback function and gets called when the payment is successful
 handler: function (response) {

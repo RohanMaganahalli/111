@@ -1,9 +1,8 @@
 const url = 'http://localhost:3000';
 
-
 const formdiv=document.getElementById('formdiv1');
-console.log(formdiv);
 formdiv.addEventListener('submit',async (e)=>{
+    e.preventDefault(); 
     console.log(e);
     console.log('login');
     const email = document.getElementById('email');

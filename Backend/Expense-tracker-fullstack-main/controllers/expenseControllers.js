@@ -18,8 +18,8 @@ const postExpenseController = async (req, res) => {
                 })
             }
             else {
-                
-                req.body.UserId = data.user.userId
+                console.log(data,'error1111111111111');
+                req.body.UserId = data.userId
                 let wait_result = await Expense.create(req.body, { transaction: t })
                 let wait_user_result = await User.findAll({
                     where: {
